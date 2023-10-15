@@ -1,4 +1,7 @@
+import CreateCollectionBtn from "@/components/CreateCollectionBtn";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Skeleton } from "@/components/ui/skeleton";
+import { prisma } from "@/lib/prismadb";
 import { currentUser } from "@clerk/nextjs";
 import Image from "next/image";
 import { redirect } from "next/navigation";
@@ -11,9 +14,10 @@ export default function Home() {
         {/* @ts-expect-error Server Component */}
         <WelcomeMsg />
       </Suspense>
-      {/* <Suspense fallback={<div>Loading collections...</div>}> */}
-      {/* <CollectionList /> */}
-      {/* </Suspense> */}
+      <Suspense fallback={<div>Loading collections...</div>}>
+        {/* @ts-expect-error Server Component */}
+        <CollectionList />
+      </Suspense>
     </>
   );
 }
@@ -43,4 +47,40 @@ function WelcomeMsgFallback() {
       </h1>
     </div>
   );
+}
+
+async function CollectionList() {
+  const user = await currentUser();
+  const collections = await prisma.collection.findMany({
+    where: {
+      userId: user?.id,
+    },
+  });
+  console.log(collections);
+
+  if (collections.length === 0) {
+    return (
+      <div className="flex flex-col gap-5">
+        <Alert>
+          {/* <SadFace /> */}
+          <AlertTitle>There are no collections yet!</AlertTitle>
+          <AlertDescription>
+            Create a collection to get started
+          </AlertDescription>
+        </Alert>
+        <CreateCollectionBtn />
+      </div>
+    );
+  }
+
+  // return (
+  //   <>
+  //     {/* <CreateCollectionBtn /> */}
+  //     <div className="flex flex-col gap-4 mt-6">
+  //       {collections.map((collection) => (
+  //         <CollectionCard key={collection.id} collection={collection} />
+  //       ))}
+  //     </div>
+  //   </>
+  // );
 }
