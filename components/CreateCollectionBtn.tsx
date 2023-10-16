@@ -1,10 +1,11 @@
 "use client";
 import React, { useState } from "react";
+import CreateCollectionSheet from "./CreateCollectionSheet";
 import { Button } from "./ui/button";
 // import CreateCollectionSheet from "./CreateCollectionSheet";
 
 function CreateCollectionBtn() {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const handleOpenChange = (open: boolean) => setOpen(open);
 
   return (
@@ -21,7 +22,7 @@ function CreateCollectionBtn() {
           Create collection
         </span>
       </Button>
-      {/* <CreateCollectionSheet open={open} onOpenChange={handleOpenChange} /> */}
+      <CreateCollectionSheet open={open} onOpenChange={handleOpenChange} />
     </div>
   );
 }
