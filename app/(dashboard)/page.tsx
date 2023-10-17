@@ -12,11 +12,9 @@ export default function Home() {
   return (
     <>
       <Suspense fallback={<WelcomeMsgFallback />}>
-        {/* @ts-expect-error Server Component */}
         <WelcomeMsg />
       </Suspense>
       <Suspense fallback={<div>Loading collections...</div>}>
-        {/* @ts-expect-error Server Component */}
         <CollectionList />
       </Suspense>
     </>
@@ -78,7 +76,7 @@ async function CollectionList() {
 
   return (
     <>
-      {/* <CreateCollectionBtn /> */}
+      <CreateCollectionBtn />
       <div className="flex flex-col gap-4 mt-6">
         {collections.map((collection) => (
           <CollectionCard key={collection.id} collection={collection} />
