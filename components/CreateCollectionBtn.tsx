@@ -5,7 +5,7 @@ import { Button } from "./ui/button";
 // import CreateCollectionSheet from "./CreateCollectionSheet";
 
 function CreateCollectionBtn() {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const handleOpenChange = (open: boolean) => setOpen(open);
 
   return (
